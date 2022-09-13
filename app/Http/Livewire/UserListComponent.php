@@ -11,6 +11,7 @@ class UserListComponent extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $users;
+    public $perPage = 10;
 
     public function mount()
     {
@@ -19,7 +20,12 @@ class UserListComponent extends Component
 
     public function render()
     {
-        $this->users = User::paginate(10);
+        $this->users = User::paginate($this->perPage);
         return view('livewire.user-list-component', ['users' => $this->users]);
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 10;
     }
 }

@@ -13,7 +13,7 @@ class UserContactListComponent extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $contacts;
-    public $user;
+    public $user, $perPage = 10;
 
     public function mount($id)
     {
@@ -22,7 +22,7 @@ class UserContactListComponent extends Component
 
     public function render()
     {
-        $this->contacts = $this->user->contacts()->paginate(5);
+        $this->contacts = $this->user->contacts()->paginate($this->perPage);
         return view('livewire.user-contact-list-component', ['contacts' => $this->contacts]);
     }
 
@@ -33,5 +33,10 @@ class UserContactListComponent extends Component
         session()->flash('success', 'Contact Information successfully deleted!');
 
         return redirect(route('user.contacts', ['id' => $user]));
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 10;
     }
 }

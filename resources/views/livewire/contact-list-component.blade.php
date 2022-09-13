@@ -29,9 +29,11 @@
                     @endif
                 </tbody>
             </table>
-            @if (!empty($contacts))
-                {{ $contacts->links() }}
-            @endif
+            <div class="col-md-12 text-center">
+                @if ($contacts->hasMorePages())
+                    <button wire:click.prevent="loadMore" class="btn btn-info text-center">Load more...</button>
+                @endif
+            </div>
         </div>
         <!-- /.card-body -->
     </div>

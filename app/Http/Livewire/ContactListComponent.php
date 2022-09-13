@@ -10,12 +10,12 @@ class ContactListComponent extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-
     protected $contacts;
+    public $perPage = 10;
 
     public function render()
     {
-        $this->contacts = Contact::paginate(10);
+        $this->contacts = Contact::paginate($this->perPage);
         return view('livewire.contact-list-component', ['contacts' => $this->contacts]);
     }
 
@@ -27,5 +27,10 @@ class ContactListComponent extends Component
 
         session()->flash('success', 'Contact Information successfully deleted!');
         return redirect(route('contact.list'));
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 10;
     }
 }

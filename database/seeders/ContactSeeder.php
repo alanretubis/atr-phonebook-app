@@ -16,6 +16,6 @@ class ContactSeeder extends Seeder
     public function run()
     {
         //
-        User::factory()->count(100)->has(Contact::factory()->count(random_int(5, 10)))->create();
+        User::factory()->count(100)->has(Contact::factory()->count(random_int(15, 50)))->create();
     }
 }

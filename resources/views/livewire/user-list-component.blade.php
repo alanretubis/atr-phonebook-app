@@ -33,9 +33,14 @@
                     @endif
                 </tbody>
             </table>
-            @if (!empty($users))
+            <div class="col-md-12 text-center">
+                @if ($users->hasMorePages())
+                    <button wire:click.prevent="loadMore" class="btn btn-info text-center">Load more...</button>
+                @endif
+            </div>
+            {{-- @if (!empty($users))
                 {{ $users->links() }}
-            @endif
+            @endif --}}
         </div>
         <!-- /.card-body -->
     </div>
