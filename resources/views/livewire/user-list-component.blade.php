@@ -20,7 +20,7 @@
                                 <td class="text-center">
                                     <button class="btn btn-warning" wire:click="$emit('setUserId', {{ $user->id }})"
                                         title="Add Contact">
-                                        +<i class="fa fa-phone"></i>
+                                        <i class="fa fa-user-plus"></i>
                                     </button>
                                     <a href="{{ route('user.contacts', [$user->id]) }}" class="btn btn-info"
                                         title="View Contacts">
@@ -38,9 +38,6 @@
                     <button wire:click.prevent="loadMore" class="btn btn-info text-center">Load more...</button>
                 @endif
             </div>
-            {{-- @if (!empty($users))
-                {{ $users->links() }}
-            @endif --}}
         </div>
         <!-- /.card-body -->
     </div>

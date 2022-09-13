@@ -11,11 +11,11 @@ class ContactController extends Controller
     public function userContactList($id)
     {
         $user = User::find($id);
-        return view('user-contacts', compact('user', 'id'));
+        return view('user_contacts', compact('user', 'id'));
     }
 
     public function allContactList()
     {
-        return view('contact-list');
+        return view('contact_list');
     }
 }
