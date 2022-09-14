@@ -11,6 +11,7 @@
                     <tr>
                         <th></th>
                         <th>Name</th>
+                        <th>Contact Number</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@
                                     </button>
                                 </td>
                                 <td>{{ $contact->name }}</td>
+                                <td>{{ $contact->phone_number }}</td>
                             </tr>
                         @endforeach
                     @endif
