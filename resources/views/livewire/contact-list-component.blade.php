@@ -22,6 +22,10 @@
                                         title="Delete Contact">
                                         <i class="fa fa-trash"></i>
                                     </button>
+                                    <button class="btn btn-warning"
+                                        wire:click="$emit('editContact', {{ $contact->id }})" title="Edit Contact">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
                                 </td>
                                 <td>{{ $contact->name }}</td>
                             </tr>

@@ -8,9 +8,9 @@ use Livewire\Component;
 
 class ContactFormComponent extends Component
 {
-    public $user_id, $user_name, $name, $phone_number;
-
-    protected $listeners = ['setUserId'];
+    public $edit = false, $user_required = true;
+    public $user_id, $user_name, $contact, $name, $phone_number;
+    protected $listeners = ['setUserId', 'editContact'];
 
     public function render()
     {
@@ -23,6 +23,14 @@ class ContactFormComponent extends Component
         $this->user_id = $user->id;
     }
 
+    public function editContact(Contact $contact)
+    {
+        $this->contact = $contact;
+        $this->name = $contact->name;
+        $this->phone_number = $contact->phone_number;
+        $this->edit = true;
+    }
+
     public function submit()
     {
         $message = array(
@@ -30,22 +38,42 @@ class ContactFormComponent extends Component
             "phone_number.regex" => "Please use the +(country code) (space) (10 digits number) format."
         );
 
-        $this->validate([
-            'user_id' => 'required',
-            'name' => 'required',
-            'phone_number' => 'required|regex:/^([+]\d{2})? \d{10}$/',
-        ], $message);
+        if ($this->edit == true) {
 
-        if ($this->user_id != null) {
+            $this->validate([
+                'name' => 'required|unique:contacts,name,' . $this->contact->id,
+                'phone_number' => 'required|regex:/^([+]\d{2})? \d{10}$/',
+            ], $message);
+
+            // Create contact record if not exists
+            $contact = Contact::find($this->contact->id);
+            $contact->name = $this->name;
+            $contact->phone_number = $this->phone_number;
+            $contact->save();
+
+            session()->flash('success', 'Contact Information updated!');
+            return redirect(route('contact.list'));
+        } else {
+
+            $validation_rules = array(
+                'name' => 'required',
+                'phone_number' => 'required|regex:/^([+]\d{2})? \d{10}$/'
+            );
+
+            if ($this->user_required == true) {
+                $validation_rules = array_merge($validation_rules, array('user_id' => 'required'));
+            }
+
+            $this->validate($validation_rules, $message);
 
             // Create contact record if not exists
             $contact = Contact::updateOrCreate(
                 ['name' => $this->name, 'phone_number' => $this->phone_number]
             );
-
-            // Attach Many to Many relationship of contact to user
-            $contact->users()->attach($this->user_id);
-
+            if ($this->user_id != null) {
+                // Attach Many to Many relationship of contact to user
+                $contact->users()->attach($this->user_id);
+            }
             session()->flash('success', 'Contact Information saved!');
         }
 

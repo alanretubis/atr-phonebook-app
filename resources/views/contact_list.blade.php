@@ -8,7 +8,10 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <div class="col-md-12">
+            <div class="col-md-4">
+                @livewire('contact-form-component', ['user_required' => false])
+            </div>
+            <div class="col-md-8">
                 @livewire('contact-list-component')
 
                 {{-- <div class="card">

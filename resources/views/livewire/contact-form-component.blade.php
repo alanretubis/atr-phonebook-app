@@ -4,8 +4,10 @@
         <form wire:submit.prevent="submit">
             <div class="card-header">
                 <h4 class="card-title">Add Contacts</h4>
-                <p>Selected User:</p>
-                <h3>{{ $user_name }}</h3>
+                @if (!empty($user_name))
+                    <p>Selected User:</p>
+                    <h3>{{ $user_name }}</h3>
+                @endif
             </div>
             <!-- /.card-header -->
             <div class="card-body">
